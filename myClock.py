@@ -1,117 +1,150 @@
 import datetime
 import random
+import time
 
 # Set current time
-now=str(datetime.datetime.now())
-seconds=now[17:19]
-minutes=now[14:16]
-hours=now[11:13]
-seconds=int(seconds)
-minutes=int(minutes)
-hours=int(hours)
+now=datetime.datetime.now()
+seconds=now.second
+minutes=now.minute
+hours=now.hour
 
 
-def whichSign(Val1,Val2,Sign):
- if Sign == 1:
-     Val12 = Val1 + Val2
-     SignChar="+"
- elif Sign == 2:
-     Val12 = Val1 - Val2
-     SignChar = "-"
- elif Sign == 3:
-     Val12 = Val1 * Val2
-     SignChar = "*"
- elif Sign == 4:
-     Val12 = Val1 / Val2
-     SignChar = "/"
+# Calculate the result of two first operands based on the operator
+def firstOperator(op1,op2,operator):
+ if operator == 1:
+     op12 = op1 + op2
+     operatorChar="+"
+ elif operator == 2:
+     op12 = op1 - op2
+     operatorChar = "-"
+ elif operator == 3:
+     op12 = op1 * op2
+     operatorChar = "*"
+ elif operator == 4:
+     op12 = op1 / op2
+     operatorChar = "/"
+ return  op12, operatorChar
 
 
- return  Val12, SignChar
-
-
-
-import time
+# Turtle graphics
 from turtle import *
-
 t1=Turtle(visible=False)
 t1.screen.title("CLOCK!")
 t1.screen.screensize()
 t1.pencolor("red")
 t1.screen.bgcolor("#000000")
+
+# Set values for HOUR
+# Set first and second operands for HOUR
 Hr_1 = random.randint(1, 9)
 Hr_2 = random.randint(1, 9)
-SignHr1 = random.randint(1, 4)
-Val12Hr, SignCharHr = whichSign(Hr_1, Hr_2, SignHr1)
-Hr_3 = hours - Val12Hr
+
+# Set first operator (+,-,*,/)
+operatorHr1 = random.randint(1, 4)
+
+# Calculate the result of two first operands for HOUR
+op12Hr, operatorCharHr = firstOperator(Hr_1, Hr_2, operatorHr1)
+
+# Find third operand based on two first operands for HOUR
+Hr_3 = hours - op12Hr
 Hr_3 = round(Hr_3, 2)
 
-SignChar2Hr="+"
+# Set second operator to "+"
+operatorChar2Hr="+"
+# Eliminate the second operator if the third operand is negative
 if Hr_3 < 0:
- SignChar2Hr = ""
+ operatorChar2Hr = ""
 
-
+# Set values for MINUTE
+# Process is the same!
 Min_1 = random.randint(1, 9)
 Min_2 = random.randint(1, 9)
-SignMin1 = random.randint(1, 4)
-Val12Min, SignCharMin = whichSign(Min_1, Min_2, SignMin1)
-Min_3 = minutes - Val12Min
+
+operatorMin1 = random.randint(1, 4)
+
+op12Min, operatorCharMin = firstOperator(Min_1, Min_2, operatorMin1)
+
+Min_3 = minutes - op12Min
 Min_3 = round(Min_3, 2)
 
-SignChar2Min="+"
+operatorChar2Min="+"
+
 if Min_3<0:
-    SignChar2Min = ""
+    operatorChar2Min = ""
+
 
 while True:
+
+# Clear Screen
  t1.clear()
 
-
-
+ # Set values for SECOND
+ # Process is the same as HOUR and MINUTE
  Sec_1 = random.randint(1, 9)
  Sec_2 = random.randint(1, 9)
- SignSec1 = random.randint(1, 3)
- Val12Sec, SignCharSec = whichSign(Sec_1, Sec_2, SignSec1)
- Sec_3 = seconds - Val12Sec
+
+ operatorSec1 = random.randint(1, 4)
+
+ op12Sec, operatorCharSec = firstOperator(Sec_1, Sec_2, operatorSec1)
+
+ Sec_3 = seconds - op12Sec
  Sec_3=round(Sec_3 , 2)
 
- SignChar2Sec = "+"
- if Sec_3 < 0:
-  SignChar2Sec = ""
+ operatorChar2Sec = "+"
 
- t1.write(str(Hr_1).zfill(2)+ SignCharHr + str(Hr_2).zfill(2) + SignChar2Hr + str(Hr_3).zfill(2)+ "   HR\n"
-        + str(Min_1).zfill(2)+ SignCharMin + str(Min_2).zfill(2) + SignChar2Min + str(Min_3).zfill(2) + "   MIN\n"
-        + str(Sec_1).zfill(2)+ SignCharSec + str(Sec_2).zfill(2) + SignChar2Sec + str(Sec_3).zfill(2)+"   SEC\n"
+ if Sec_3 < 0:
+  operatorChar2Sec = ""
+
+# Write HOUR, MINUTE and SECOND to the screen
+ t1.write(str(Hr_1).zfill(2)+ operatorCharHr + str(Hr_2).zfill(2) + operatorChar2Hr + str(Hr_3).zfill(2)+ "   HR\n"
+        + str(Min_1).zfill(2)+ operatorCharMin + str(Min_2).zfill(2) + operatorChar2Min + str(Min_3).zfill(2) + "   MIN\n"
+        + str(Sec_1).zfill(2)+ operatorCharSec + str(Sec_2).zfill(2) + operatorChar2Sec + str(Sec_3).zfill(2)+"   SEC\n"
         ,move=False, align="center",font=("DS-Digital",65,"bold"))
 
-
-
+ # Set value for second when second<60
  seconds = seconds + 1
+
+ # Wait for 1 seconds
  time.sleep (1)
+
+# Set Second and Minute when Second = 60!
  if seconds == 60:
   seconds = 0
   minutes = minutes + 1
 
+# Set Screen for MINUTE
   Min_1 = random.randint(1, 9)
   Min_2 = random.randint(1, 9)
-  SignMin1 = random.randint(1, 4)
-  Val12Min, SignCharMin = whichSign(Min_1, Min_2, SignMin1)
-  Min_3 = minutes - Val12Min
+
+  operatorMin1 = random.randint(1, 4)
+
+  op12Min, operatorCharMin = firstOperator(Min_1, Min_2, operatorMin1)
+
+  Min_3 = minutes - op12Min
   Min_3 = round(Min_3, 2)
 
- SignChar2Min = "+"
- if Min_3 < 0:
-     SignChar2Min = ""
+ operatorChar2Min = "+"
 
+ if Min_3 < 0:
+     operatorChar2Min = ""
+
+# Set Minute and Hour when Minute = 60!
  if minutes == 60:
   minutes = 0
   hours = hours + 1
 
+# Set Screen for HOUR
   Hr_1 = random.randint(1, 9)
   Hr_2 = random.randint(1, 9)
-  SignHr1 = random.randint(1, 4)
-  Val12Hr, SignCharHr = whichSign(Hr_1, Hr_2, SignHr1)
-  Hr_3 = hours - Val12Hr
+
+  operatorHr1 = random.randint(1, 4)
+
+  op12Hr, operatorCharHr = firstOperator(Hr_1, Hr_2, operatorHr1)
+
+  Hr_3 = hours - op12Hr
   Hr_3 = round(Hr_3, 2)
 
-  SignChar2Hr = "+"
+  operatorChar2Hr = "+"
+
   if Hr_3 < 0:
-      SignChar2Hr = ""
+      operatorChar2Hr = ""
