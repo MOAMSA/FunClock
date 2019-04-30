@@ -2,14 +2,14 @@ import datetime
 import random
 import time
 
-# Set current time
+# Get current time
 now=datetime.datetime.now()
 seconds=now.second
 minutes=now.minute
 hours=now.hour
 
 
-# Calculate the result of two first operands based on the operator
+# Calculate the result by applying first operator on two first operands
 def firstOperator(op1,op2,operator):
  if operator == 1:
      op12 = op1 + op2
@@ -28,11 +28,11 @@ def firstOperator(op1,op2,operator):
 
 # Turtle graphics
 from turtle import *
-t1=Turtle(visible=False)
-t1.screen.title("CLOCK!")
-t1.screen.screensize()
-t1.pencolor("red")
-t1.screen.bgcolor("#000000")
+turtle=Turtle(visible=False)
+turtle.screen.title("CLOCK!")
+turtle.screen.setup (width=800, height=700, startx=200, starty=0)
+turtle.pencolor("red")
+turtle.screen.bgcolor("#000000")
 
 # Set values for HOUR
 # Set first and second operands for HOUR
@@ -76,7 +76,7 @@ if Min_3<0:
 while True:
 
 # Clear Screen
- t1.clear()
+ turtle.clear()
 
  # Set values for SECOND
  # Process is the same as HOUR and MINUTE
@@ -96,7 +96,7 @@ while True:
   operatorChar2Sec = ""
 
 # Write HOUR, MINUTE and SECOND to the screen
- t1.write(str(Hr_1).zfill(2)+ operatorCharHr + str(Hr_2).zfill(2) + operatorChar2Hr + str(Hr_3).zfill(2)+ "   HR\n"
+ turtle.write(str(Hr_1).zfill(2)+ operatorCharHr + str(Hr_2).zfill(2) + operatorChar2Hr + str(Hr_3).zfill(2)+ "   HR\n"
         + str(Min_1).zfill(2)+ operatorCharMin + str(Min_2).zfill(2) + operatorChar2Min + str(Min_3).zfill(2) + "   MIN\n"
         + str(Sec_1).zfill(2)+ operatorCharSec + str(Sec_2).zfill(2) + operatorChar2Sec + str(Sec_3).zfill(2)+"   SEC\n"
         ,move=False, align="center",font=("DS-Digital",65,"bold"))
